@@ -1,4 +1,4 @@
-//set up materialize components
+// Set up materialize components
 document.addEventListener("DOMContentLoaded", function(){
   var modals = document.querySelectorAll(".modal");
   M.Modal.init(modals);
@@ -7,17 +7,31 @@ document.addEventListener("DOMContentLoaded", function(){
   M.Collapsible.init(items);
 });
 
-
 const meals = document.querySelector(".meals");
 const loggedOutLinks = document.querySelectorAll(".logged-out");
 const loggedInLinks = document.querySelectorAll(".logged-in");
+
+// Function to show a notification
+function showNotification(title, body) {
+  if (Notification.permission === "granted") {
+    const notification = new Notification(title, {
+      body: body,
+      icon: "/img/task.png",
+    });
+
+    notification.onclick = () => {
+      // Handle click event
+      console.log("Notification clicked");
+    };
+  }
+}
 
 const setupUI = (user) => {
   if(user) {
     //toggle UI elements
     loggedOutLinks.forEach((item) => (item.style.display = "none"));
     loggedInLinks.forEach((item) => (item.style.display = "block"));
-  }else {
+  } else {
     loggedOutLinks.forEach((item) => (item.style.display = "block"));
     loggedInLinks.forEach((item) => (item.style.display = "none"));
   }
@@ -32,9 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
   M.Sidenav.init(forms, { edge: "left" });
 });
 
-//populate data when user is signed in
+//populate data when the user is signed in
 const setupMeals = (data) => {
-  let html ="";
+  let html = "";
   data.forEach((doc) => {
     const meal = doc.data();
     const li = `
@@ -50,7 +64,11 @@ const setupMeals = (data) => {
     </div>
     `;
     html += li;
-  })
+  });
+
+  // Show a notification upon successful data retrieval
+  showNotification("Meals Loaded", "Your meal data has been loaded successfully.");
+
   meals.innerHTML = html;
 };
 
@@ -67,7 +85,7 @@ const renderMeal =(data, id) => {
     </div>
     </div>
   `;
-  meals.innerHTML +=html;
+  meals.innerHTML += html;
 };
 
 //remove meals from DOM
