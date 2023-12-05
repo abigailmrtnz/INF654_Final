@@ -1,5 +1,5 @@
-const staticCache = "Static-cache-v21";
-const dynamicCache = "Dynamic-cache-v20";
+const staticCache = "Static-cache-v22";
+const dynamicCache = "Dynamic-cache-v21";
 
 const assets = [
   "/",
@@ -50,6 +50,7 @@ self.addEventListener("activate", function (event) {
 // Display notification when a new meal is added
 const showNotification = (title, options) => {
   self.registration.showNotification(title, options);
+  console.log('Notification shown: ${title}');
 };
 
 self.addEventListener("fetch", function (event) {
@@ -67,7 +68,6 @@ self.addEventListener("fetch", function (event) {
               if (event.request.method === "POST") {
                 const options = {
                   body: "A new meal has been added!",
-                  icon: "/img/task.png", // replace with your icon path
                 };
                 showNotification("New Meal Added", options);
               }

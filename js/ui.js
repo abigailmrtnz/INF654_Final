@@ -16,7 +16,6 @@ function showNotification(title, body) {
   if (Notification.permission === "granted") {
     const notification = new Notification(title, {
       body: body,
-      icon: "/img/task.png",
     });
 
     notification.onclick = () => {

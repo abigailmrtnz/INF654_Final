@@ -24,13 +24,13 @@ function showNotification(title, body) {
   if (Notification.permission === "granted") {
     const notification = new Notification(title, {
       body: body,
-      icon: "/img/task.png",
     });
 
     notification.onclick = () => {
       // Handle click event
       console.log("Notification clicked");
     };
+    console.log('Notification shown: ${title}');
   }
 }
 
